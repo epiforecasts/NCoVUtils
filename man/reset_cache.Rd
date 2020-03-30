@@ -4,7 +4,7 @@
 \alias{reset_cache}
 \title{Reset Cache and Update all Local Data}
 \usage{
-reset_cache(refresh_data = FALSE)
+reset_cache()
 }
 \arguments{
 \item{refresh_data}{Logical defaults to \code{FALSE}. Should all data sources be refreshed once the cache has been
