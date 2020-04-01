@@ -54,6 +54,7 @@ Imports:
     janitor,
     jsonlite,
     pdftools
+    
 Suggests:
     pkgdown,
     testthat
