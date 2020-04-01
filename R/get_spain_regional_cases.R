@@ -3,11 +3,10 @@
 #' @description Extract regional spanish case counts.
 #' [Source](https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.html)
 #' @return A dataframe of daily Spanish regional case counts.
-#' @importFrom tabulizer extract_tables
-#' @importFrom dplyr select mutate
+#' @importFrom pdftools pdf_text
+#' @importFrom dplyr select mutate row_number filter
 #' @importFrom memoise cache_filesystem memoise
-#' @importFrom stringr str_remove_all
-#' @importFrom tibble as_tibble
+#' @importFrom stringr str_locate str_sub word str_remove_all str_detect
 #' @export
 #' @examples
 #'
@@ -59,30 +58,41 @@
 #' }
 #' ##Code
 #' get_spain_regional_cases
-# get_spain_regional_cases <- function() {
-#
-#   # Path to table. Daily report 52 = 22 March 2020 so calculating daily updated link based on that
-#   link_1 <- "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/documentos/Actualizacion_"
-#   link_2 <- 52 + (as.numeric(Sys.Date()) - 18343)
-#   link_3 <- "_COVID-19.pdf"
-#   location <- paste0(link_1, link_2, link_3)
-#
-#   #set up cache
-#   ch <- memoise::cache_filesystem(".cache")
-#   mem_read <- memoise::memoise(tabulizer::extract_tables, cache = ch)
-#
-#   # Extract & clean table (e.g. remove cumulative cases & incidence)
-#   out <- mem_read(location, pages = 1)
-#   cases <- do.call(rbind, out[length(out)])
-#   cases <- tibble::as_tibble(cases, .name_repair = "universal") %>%
-#     dplyr::select("region" = 1, "cases" = ncol(cases)) %>%
-#     dplyr::filter(region != "ESPAÃ‘A" & region != "CCAA" & region != "") %>%
-#     dplyr::mutate(region = iconv(region, from = 'UTF-8', to = 'ASCII//TRANSLIT'),
-#                   cases = as.character(cases),
-#                   cases = stringr::str_remove_all(cases, "[[:punct:]]"),
-#                   cases = as.numeric(cases))
-#   return(cases)
-#
-# }
+
+get_spain_regional_cases <- function() {
+
+  # Path to table. Daily report 52 = 22 March 2020 so calculating daily updated link based on that
+  link_1 <- "https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/documentos/Actualizacion_"
+  link_2 <- 52 + (as.numeric(Sys.Date()) - 18343)
+  link_3 <- "_COVID-19.pdf"
+  location <- paste0(link_1, link_2, link_3)
+  
+  #set up cache
+  ch <- memoise::cache_filesystem(".cache")
+  mem_read <- memoise::memoise(pdftools::pdf_text, cache = ch)
+  
+  # Read & clean data
+  text <- mem_read(location)
+  
+  p1 <- text[1]
+  rows <- suppressMessages(as.matrix(scan(textConnection(p1), what="character", sep = "\n")))
+  start_row <- which(stringr::str_detect(rows, "Andalu"))
+  end_row <- which(stringr::str_detect(rows, "La Rioja"))
+  rows <- as.data.frame(rows)
+  data <- rows %>%
+    dplyr::mutate(row = dplyr::row_number()) %>%
+    dplyr::filter(row %in% start_row:end_row) %>%
+    dplyr::mutate(
+      digit = stringr::str_locate(V1, "\\s[[:digit:]]")[,1],
+      region = stringr::str_sub(V1, start = 1, end = (digit-1)),
+      region = iconv(region, from = 'UTF-8', to = 'ASCII//TRANSLIT'),
+      region = trimws(region),
+      cases = stringr::word(V1, -1),
+      cases = stringr::str_remove_all(cases, "\\."),
+      cases = as.numeric(cases) ) %>%
+    dplyr::select(region, cases)
+
+  return(data)
+}
 
 
