@@ -3,8 +3,7 @@
 #' @param source Character String specifying data source for total cases "WHO", "ECDC", default: "WHO".
 #' @return Returns a data frame of variables along with their most recent value.
 #' @export
-#' @importFrom dplyr select contains slice mutate arrange desc filter
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr select contains slice mutate arrange desc filter as_tibble
 #' @examples
 #'
 #' ## Total cases sourced from the WHO
@@ -24,7 +23,7 @@ get_total_cases <- function(source = 'WHO') {
 
     total_cases <- total_cases[nrow(total_cases), ] %>%
       t() %>%
-      tibble::as_tibble(rownames = "country") %>%
+      dplyr::as_tibble(rownames = "country") %>%
       dplyr::slice(-c(1:2))  %>%
       dplyr::mutate(cases = suppressWarnings(as.numeric(V1))) %>% 
       dplyr::select(-V1) %>%

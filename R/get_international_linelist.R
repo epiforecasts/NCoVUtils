@@ -12,7 +12,7 @@
 #' @importFrom dplyr if_else select mutate filter
 #' @importFrom readr read_csv
 #' @importFrom lubridate dmy
-#' @importFrom tibble tibble
+#' @importFrom dplyr as_tibble
 #' @importFrom tidyr drop_na
 #' @importFrom memoise memoise cache_filesystem
 #' @importFrom R.utils withTimeout
@@ -40,7 +40,7 @@ get_international_linelist <- function(countries = NULL, cities = NULL, province
   linelist <- suppressWarnings(
     suppressMessages(
       try(R.utils::withTimeout(mem_read(url) %>%
-        tibble::as_tibble(), timeout = 15, onTimeout = "error"),
+        dplyr::as_tibble(), timeout = 15, onTimeout = "error"),
         silent = TRUE)
     )
   )
@@ -54,7 +54,7 @@ get_international_linelist <- function(countries = NULL, cities = NULL, province
       linelist <- suppressWarnings(
         suppressMessages(
           mem_read(url) %>%
-            tibble::as_tibble()
+            dplyr::as_tibble()
         )
       )
   }

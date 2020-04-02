@@ -40,13 +40,13 @@ get_france_regional_cases <- function() {
 #'
 #' @param path path to daily SPF covid-19 yaml file
 #' @importFrom yaml read_yaml
-#' @importFrom tibble tibble
+#' @importFrom dplyr tibble
 #' @importFrom purrr map_chr map_int
 read_spf_regions_yaml <- function(path) {
   ydat <- suppressWarnings(yaml::read_yaml(path))
   regions <- ydat$donneesRegionales
 
-  tibble::tibble(
+  dplyr::tibble(
     date = as.Date(ydat$date),
     country = "France",
     source = "SPF",

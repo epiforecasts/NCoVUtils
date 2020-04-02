@@ -5,7 +5,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom rvest html_nodes html_text html_table
 #' @importFrom tidyr replace_na
-#' @importFrom dplyr mutate filter select group_by summarise n full_join
+#' @importFrom dplyr mutate filter select group_by summarise n full_join tibble
 #' @importFrom lubridate as_datetime
 #' @importFrom memoise cache_filesystem memoise
 #' @export
@@ -50,9 +50,9 @@
 
 get_japan_regional_cases <- function(){
   
-#  #Return error here. 
-#  print('This data source has changed. We are currently working to fix it.')
-#  return(tibble())
+  #  #Return error here. 
+  #  print('This data source has changed. We are currently working to fix it.')
+  #  return(tibble())
   
   # Locate source
   location <- "https://services8.arcgis.com/JdxivnCyd1rvJTrY/arcgis/rest/services/covid19_list_csv_EnglishView/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=No%20desc%2C%E7%A2%BA%E5%AE%9A%E6%97%A5%20desc&resultOffset=0&resultRecordCount=2000&cacheHint=true"
@@ -63,7 +63,10 @@ get_japan_regional_cases <- function(){
   data <- mem_read(location)
   data <- data$features$attributes
   colnames(data) <- c("pref_jp", "age_jp", "gender_jp", "diagnosis_date", "no", "cumulative", "pref_cases", "region", "age_en", "gender_en", "objectid")
-  regions <- tibble::enframe(unique(data$region))
+  
+  regions <- dplyr::tibble(value = unique(data$region)) %>% 
+    dplyr::mutate(name = 1:length(unique(data$region)))
+  
   data_df <- data %>%
     dplyr::mutate(date = as.numeric(diagnosis_date) / 1000,
                   date = lubridate::as_datetime(date, tz = "Japan")) %>%

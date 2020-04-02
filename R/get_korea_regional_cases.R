@@ -4,8 +4,7 @@
 #' [Source](http://ncov.mohw.go.kr/en).
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_text
-#' @importFrom dplyr filter mutate
-#' @importFrom tidyr as_tibble
+#' @importFrom dplyr filter mutate as_tibble
 #' @export
 #' @examples
 #'
@@ -42,7 +41,7 @@ get_korea_regional_cases <- function() {
 
   cases <- cbind(region, cases)
 
-  cases <- tidyr::as_tibble(cases) %>%
+  cases <- dplyr::as_tibble(cases) %>%
     dplyr::filter(region != "Lazaretto") %>%
     dplyr::mutate(cases = as.numeric(as.character(cases)))
 

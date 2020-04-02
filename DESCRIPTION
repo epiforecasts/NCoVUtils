@@ -37,7 +37,6 @@ Imports:
     readr,
     gdata,
     dplyr,
-    tibble,
     purrr,
     stringr,
     magrittr,
