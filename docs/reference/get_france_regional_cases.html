@@ -131,20 +131,20 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Code</span>
-<span class='no'>get_france_regional_cases</span></div><div class='output co'>#&gt; function () 
-#&gt; {
-#&gt;     spf_url &lt;- "https://api.github.com/repos/opencovid19-fr/data/contents/sante-publique-france"
-#&gt;     spf_ls &lt;- httr::GET(spf_url) %&gt;% httr::content() %&gt;% purrr::map_chr("download_url")
-#&gt;     ch &lt;- memoise::cache_filesystem(".cache")
-#&gt;     mem_read_spf_regions &lt;- memoise::memoise(read_spf_regions_yaml, 
-#&gt;         cache = ch)
-#&gt;     df_spf &lt;- spf_ls %&gt;% purrr::map_dfr(mem_read_spf_regions) %&gt;% 
-#&gt;         dplyr::group_by(region) %&gt;% dplyr::arrange(date) %&gt;% 
-#&gt;         dplyr::mutate(cases = c(cases[1], diff(cases))) %&gt;% dplyr::ungroup()
-#&gt;     return(df_spf)
-#&gt; }
-#&gt; &lt;bytecode: 0x7fab3ce311a8&gt;
-#&gt; &lt;environment: namespace:NCoVUtils&gt;</div></pre>
+<span class='fu'>get_france_regional_cases</span>()</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 496 x 6</span><span>
+#&gt;    date       country source region             region_code cases
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2020-01-24 France  SPF    Île-de-France      REG-11          2
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2020-01-24 France  SPF    Nouvelle-Aquitaine REG-75          1
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2020-01-25 France  SPF    Île-de-France      REG-11          0
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2020-01-25 France  SPF    Nouvelle-Aquitaine REG-75          0
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2020-01-26 France  SPF    Île-de-France      REG-11          0
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2020-01-26 France  SPF    Nouvelle-Aquitaine REG-75          0
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2020-01-27 France  SPF    Île-de-France      REG-11          0
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2020-01-27 France  SPF    Nouvelle-Aquitaine REG-75          0
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2020-01-28 France  SPF    Île-de-France      REG-11          1
+#&gt; </span><span style='color: #555555;'>10</span><span> 2020-01-28 France  SPF    Nouvelle-Aquitaine REG-75          0
+#&gt; </span><span style='color: #555555;'># … with 486 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

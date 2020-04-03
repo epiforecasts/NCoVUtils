@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Spain regional cases daily — get_spain_regional_cases • NCoVUtils</title>
+<title>Fetch daily COVID cases by region for Belgium. — get_belgium_regional_cases • NCoVUtils</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Spain regional cases daily — get_spain_regional_cases" />
-<meta property="og:description" content="Extract regional spanish case counts.
-Source" />
+<meta property="og:title" content="Fetch daily COVID cases by region for Belgium. — get_belgium_regional_cases" />
+<meta property="og:description" content="Fetches daily COVID data from Sciensano, the Belgian Institute for Health.
+Data is available at https://epistat.wiv-isp.be/covid/" />
 
 
 
@@ -113,33 +113,38 @@ Source" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Spain regional cases daily</h1>
+    <h1>Fetch daily COVID cases by region for Belgium.</h1>
     
-    <div class="hidden name"><code>get_spain_regional_cases.Rd</code></div>
+    <div class="hidden name"><code>get_belgium_regional_cases.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Extract regional spanish case counts.
-<a href='https://covid19.isciii.es/'>Source</a></p>
+    <p>Fetches daily COVID data from Sciensano, the Belgian Institute for Health.
+Data is available at https://epistat.wiv-isp.be/covid/</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_spain_regional_cases</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"cases_provincial"</span>)</pre>
+    <pre class="usage"><span class='fu'>get_belgium_regional_cases</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"cases_provincial"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dataset</th>
-      <td><p>Character String specifying dataset: "cases_provincial", "hospitalisation_provincial", "icu_provincial", "mortality_provincial", "recovered_provincial", "all". Default: "cases_provincial".</p></td>
+      <td><p>Character String specifying dataset "cases_municipal", "cases_provincial", "hospitalisation_provincial", "mortality_provincial", "testing_national", "all". Default: "cases_provincial".</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe of specified Covid data. If dataset = "all", a dataframe with all variables (cases, hospitalisation, ICU, mortality, recovered)</p>
+    <p>A data.frame of specified Covid data. If dataset = "all", a named list of all available datasets.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+
+ <span class='fu'>get_belgium_regional_cases</span>(<span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"testing_national"</span>)
+
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
