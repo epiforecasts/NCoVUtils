@@ -47,3 +47,6 @@ get_who_cases <- function(country = NULL, daily = FALSE, cache = NULL) {
 
   return(who_cases)
 }
+
+
+
