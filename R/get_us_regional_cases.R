@@ -44,7 +44,14 @@ get_us_regional_cases <- function(level = 'state', out = 'timeseries'){
   
   get_nyt_state <- function(path, out){
     
-    cases <- mem_read(path)
+    cases <- mem_read(path) %>% 
+      dplyr::group_by(state) %>% 
+      dplyr::mutate(cases = c(0, diff(cases)),
+                    deaths = c(0, diff(deaths))) %>%
+      dplyr::mutate(cases = replace(cases, cases < 0 , 0),
+                    deaths = replace(deaths, deaths < 0 , 0)) %>% 
+      dplyr::ungroup()
+      
     
     if (out == 'total'){
       cases <- cases %>% 
@@ -62,7 +69,14 @@ get_us_regional_cases <- function(level = 'state', out = 'timeseries'){
   
   get_nyt_county <- function(path, out){
     
-    cases <- mem_read(path)
+    cases <- mem_read(path) %>% 
+      dplyr::group_by(fips) %>% 
+      tidyr::drop_na(fips) %>% 
+      dplyr::mutate(cases = c(0, diff(cases)),
+                    deaths = c(0, diff(deaths))) %>% 
+      dplyr::mutate(cases = replace(cases, cases < 0 , 0),
+                    deaths = replace(deaths, deaths < 0 , 0)) %>% 
+      dplyr::ungroup()
     
     if (out == 'total'){
       cases <- cases %>%
@@ -83,14 +97,13 @@ get_us_regional_cases <- function(level = 'state', out = 'timeseries'){
   
   if (level == 'state'){
     
-    cases <- get_nyt_state(nyt_state_url, out)
+    return(get_nyt_state(nyt_state_url, out))
     
   }else if(level == 'county'){
     
-    cases <- get_nyt_county(nyt_county_url, out)
+    return(get_nyt_county(nyt_county_url, out))
     
   }
 
-  return(cases)
-  
 }
+

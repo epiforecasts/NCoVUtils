@@ -83,10 +83,10 @@ get_spain_regional_cases <- function(dataset = "cases_provincial"){
       dplyr::group_by(province) %>%
       dplyr::arrange(date, .by_group = T) %>%
       dplyr::mutate(cases_daily = cases_cum - lag(cases_cum, default = dplyr::first(cases_cum)),
-                    hospital_daily = hospital_cum - lag(hospital_cum, default = first(hospital_cum)),
-                    icu_daily = icu_cum - lag(icu_cum, default = first(icu_cum)),
-                    deaths_daily = deaths_cum - lag(deaths_cum, default = first(deaths_cum)),
-                    recover_daily = recover_cum - lag(recover_cum, default = first(recover_cum))) %>% 
+                    hospital_daily = hospital_cum - lag(hospital_cum, default = dplyr::first(hospital_cum)),
+                    icu_daily = icu_cum - lag(icu_cum, default = dplyr::first(icu_cum)),
+                    deaths_daily = deaths_cum - lag(deaths_cum, default = dplyr::first(deaths_cum)),
+                    recover_daily = recover_cum - lag(recover_cum, default = dplyr::first(recover_cum))) %>% 
       tidyr::replace_na(list(cases_cum = 0, hospital_cum = 0, icu_cum = 0, deaths_cum = 0,
                              recover_cum = 0, cases_daily = 0, hospital_daily = 0, icu_daily = 0,
                              deaths_daily = 0, recover_daily = 0)) %>% 
