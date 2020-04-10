@@ -106,4 +106,3 @@ get_us_regional_cases <- function(level = 'state', out = 'timeseries'){
   }
 
 }
-
