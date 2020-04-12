@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+<meta name="date" content="2020-04-12" />
+
+<title>Introduction to NCoVUtils</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction to NCoVUtils</h1>
+<h4 class="date">2020-04-12</h4>
+
+
+
+<p>This R package provides functions to get sub-national covid-19 data from selected countries. The current focus is on case and death data at a sub-national level. We also have functions to get all available country level data from the WHO and ECDC, and a database of current non-pharmaceutical interventions worldwide.</p>
+<p>In general, functions to get data will source, download, and clean the data following tidy principles, so that output is ready for immediate analysis.</p>
+<p>We depend on others for these data sources, including government and community maintained data, and cannot provide quality checks on the data itself.</p>
+<div id="a-note-on-caching" class="section level3">
+<h3>A note on caching</h3>
+<p>This package makes extensive use of <code>memoise</code> and writes a .cache to the directory in which its functions are run. This speeds up data retrieval and avoids hitting rate limits but does not follow CRAN best practice. Use with care. The cache can be reset with <code>reset_cache()</code> when updated data is required from the online source.</p>
+</div>
+<div id="worldwide-data" class="section level2">
+<h2>Worldwide data</h2>
+<p>There are three sources of worldwide, country-level data on cases. One also includes deaths.</p>
+<ol style="list-style-type: decimal">
+<li>Extract total global cases and deaths by country using:</li>
+</ol>
+<ul>
+<li><code>NCoVUtils::get_total_cases()</code></li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Extract international case counts compiled by the WHO using:</li>
+</ol>
+<ul>
+<li><code>NCoVUtils::get_who_cases()</code></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Extract international case counts compiled by ECDC using:</li>
+</ol>
+<ul>
+<li><code>NCoVUtils::get_ecdc_cases()</code></li>
+</ul>
+<p>A further function for worldwide data extracts non-pharmaceutical interventions by country:</p>
+<ul>
+<li><code>NCoVUtils::get_interventions_data()</code></li>
+</ul>
+<p>And we include a function to import and clean the latest anonymised international patient linelist data:</p>
+<ul>
+<li><code>NCoVUtils::get_linelist()</code></li>
+</ul>
+</div>
+<div id="sub-national-data" class="section level2">
+<h2>Sub-national data</h2>
+<p>We currently have functions to extract sub-national level data for 11 countries. These are typically at the admin-1 level, the largest regions available. Where possible, we have joined the data to standard georeferencing to allow for straightforward mapping using <code>rnaturalearth</code>.</p>
+<p>For most countries, subnational cases can be extracted by using the following:</p>
+<ul>
+<li><code>NCoVUtils::get_[country]_regional_cases()</code></li>
+</ul>
+<p>But exceptions are given below.</p>
+<p>Currently we include functions for sub-national data in the following countries:</p>
+<p>Europe</p>
+<ul>
+<li><p>Belgium</p></li>
+<li><p>France</p></li>
+<li><p>Germany</p></li>
+<li><p>Italy</p></li>
+<li><p>Spain</p></li>
+<li><p>United Kingdom - use <code>NCoVUtils::get_uk_nhs_region_cases()</code></p></li>
+</ul>
+<p>Americas</p>
+<ul>
+<li><p>Canada</p></li>
+<li><p>United States - use <code>NCoVUtils::get_us_regional_cases()</code></p></li>
+</ul>
+<p>Eastern Mediterranean</p>
+<ul>
+<li>Afghanistan</li>
+</ul>
+<p>Western Pacific</p>
+<ul>
+<li><p>Korea</p></li>
+<li><p>Japan</p></li>
+</ul>
+<p>South-East Asia</p>
+<ul>
+<li>None currently available</li>
+</ul>
+<p>Africa</p>
+<ul>
+<li>None currently available</li>
+</ul>
+<p>We are working to include more countries.</p>
+</div>
+<div id="example-germany" class="section level2">
+<h2>Example: Germany</h2>
+<p>German data was collated by Jan-Philip Gehrcke (gh: jgehrcke) and is available <a href="https://github.com/jgehrcke/covid-19-germany-gae">on github</a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">germany &lt;-<span class="st"> </span>NCoVUtils<span class="op">::</span><span class="kw">get_germany_regional_cases</span>()
+<span class="kw">head</span>(germany, <span class="dv">5</span>)
+<span class="co">#&gt; # A tibble: 5 x 4</span>
+<span class="co">#&gt;   date       region_code cases region     </span>
+<span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      </span>
+<span class="co">#&gt; 1 2020-03-10 DE-BB           9 Brandenburg</span>
+<span class="co">#&gt; 2 2020-03-11 DE-BB          15 Brandenburg</span>
+<span class="co">#&gt; 3 2020-03-12 DE-BB           6 Brandenburg</span>
+<span class="co">#&gt; 4 2020-03-13 DE-BB          14 Brandenburg</span>
+<span class="co">#&gt; 5 2020-03-14 DE-BB          17 Brandenburg</span></code></pre></div>
+<p>Use usual tidyverse verbs to adapt the returned data, for example getting only the latest date:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(dplyr))
+<span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.5.3</span>
+germany_latest &lt;-<span class="st"> </span><span class="kw">filter</span>(germany, date <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(date))
+<span class="kw">head</span>(germany_latest, <span class="dv">5</span>)
+<span class="co">#&gt; # A tibble: 5 x 4</span>
+<span class="co">#&gt;   date       region_code cases region           </span>
+<span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;            </span>
+<span class="co">#&gt; 1 2020-04-10 DE-BB         167 Brandenburg      </span>
+<span class="co">#&gt; 2 2020-04-10 DE-BW        1384 Baden-Wurttemberg</span>
+<span class="co">#&gt; 3 2020-04-10 DE-BY        2095 Bavaria          </span>
+<span class="co">#&gt; 4 2020-04-10 DE-BE         319 Berlin           </span>
+<span class="co">#&gt; 5 2020-04-10 DE-HB          29 Bremen</span></code></pre></div>
+<p>Or aggregate cases to a national level and plot over time:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(ggplot2))
+<span class="co">#&gt; Warning: package 'ggplot2' was built under R version 3.5.3</span>
+germany <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">group_by</span>(date) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarise</span>(<span class="dt">cases =</span> <span class="kw">sum</span>(cases)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> cases)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Cases&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Germany: reported covid-19 cases&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>German regions can be mapped by a simple join with <code>rnaturalearth</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">regions &lt;-<span class="st"> </span>rnaturalearth<span class="op">::</span><span class="kw">ne_states</span>(<span class="st">&quot;Germany&quot;</span>, <span class="dt">returnclass =</span> <span class="st">&quot;sf&quot;</span>)
+
+germany_latest &lt;-<span class="st"> </span>NCoVUtils<span class="op">::</span><span class="kw">get_germany_regional_cases</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(date <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(date))
+
+regions_with_data &lt;-<span class="st"> </span>regions <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(germany_latest,
+                  <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">&quot;iso_3166_2&quot;</span> =<span class="st"> &quot;region_code&quot;</span>))
+
+regions_with_data <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> cases)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;German regions: latest cases&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAACr1BMVEUAAAAAACsAAFUAKysAK1UAK4AAVYAAVaoTK0MTLEQULUYULkcVL0gVL0kWMEoWMUsWMkwXMkwXMk0XM04YNE8YNVAYNVEZNlIZN1QaOFUaOVYaOlcbO1gbO1kcPFocPVsdPlwdPl0dP10eQF8eQWAfQmIfQ2QgRGUgRWYhRmghR2kiSWsiSmwjS24kTG8kTXElTnIlT3QmUHUmUXYnUngoVHooVXspVn0pV38qWIAqWYIrAAArACsrAFUrKwArKysrK1UrK4ArVVUrVYArVaorWoMrgKorgNQsXIUsXYYtXoctX4kuYIouYYwvY44wZI8wZZExZpIxZ5QyaZYyaZczMzMza5k0bJo0bZw1bp41b582caE3cqM3c6Q4dKY4dac5d6k6eKs6eaw7eq47e688fbE9frM9f7Q9gLU+gLY+gbc/g7lAhLtAhbxBhr5Bh79CicFDisNDi8REjcZFjshFj8lGkMtGkc1Hk89IlNBIldJJl9RJmNVKmddLm9lLm9pMndxNTU1NTWtNTYhNa6ZNiMRNnt1Nn99OoeFOouNPo+VQpOZQpuhRp+pSqOtSqu1Tq+9UrPBUrvJVAABVACtVAFVVKwBVKytVK1VVgIBVgKpVgNRVqoBVqtRVqv9Vr/RWsPZWsfdZWVlrTU1rTWtrTYhra4hra6ZriMRrpuGAKwCAKyuAK1WAVQCAVSuAVVWAgKqAqoCAqtSA1KqA1P+ITU2ITWuITYiIa02Ia6aIxOGIxP+ma02ma2uma4imiE2miGumxKam4eGm4f+qVQCqgCuqqoCqqtSq1NSq1P+q///EiE3ExIjE///UgCvUqlXUqoDU1IDU1KrU1NTU/6rU///hpmvhpojh///r6+v/qlX/xIj/1ID/1Kr/1NT/4ab//6r//8T//9T//+H///9fSzNZAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAVf0lEQVR4nO2diZ9dSVXHXzPEPMQJCWGEGBlpBbQVZRMRG3BgBoKC4DYuuLETBReQTVuFhhk2BZVW2ZyG1Gx2KyhjRsCecWGagUlIzwB2k35p7E7n/SHc2rdT91Td9eVRv88n6fduVd3l+845VffeOvcOxlmlGvS9A5OuDAhRBoQoA0KUASHKgBBlQIgyIEQZEKIMCFEGhCgDQpQBIcqAEGVAiDIgRBkQogwIUQaEKANClARo//6fHgwG13y5jR3ZXz2wWa3qzkfOgNVCy9OUAmjvHwZcJxrYsKvqgDYeBIMILU9TAqD91cG1hfHsPzA/c7qBLVfXpAIaDQ7yDzvz9MM3C3u65j66uwc3Bg+6d/7E/fMzHx+P5gfX0r2//9mDQfGVHsy9z2afmHjl+1TjouL8YOZjqwfFUdPlD77Parb/6WJNN7HtL8uV0KpiC8XPxkxarVHUl8vHYiMPZj+q3C29Vq9hdUDr1i+yM0+drbCl/dUr5gcHvjr/3GLBzGfo0gLfBvfFZb6f7JM4Nlp5UzWWFQWgkV6ps4JlF5DcggCx47RcNgGNnK2Za/UaVga0t3TQ+La/SmE/ME+PjO5HsZ2bxvfzXT2wub9aWAmztKL0ID2ag7IZrawb7y3N3DH+5qoAVJTeRI+CfRLNduav2xQ2q7dtboG5kl6jrq9crCg8XezbibFupGpBDesBYj8CtQH26xQ7UWz1jNjVvaXipxUR4uv3/us8O25aquDKyrLxiP3IfE/pSlm19ZnTutnO/BUfdbpNewsMhF6jrq8AiUIm0UjVgho2AmgkOjR6LHR32YZ4lfUDm8JwpefQ0GMem268weL9/qoExAx8JFfKmq3Tmtfe5wJSW2Ag9Bp1fQOQ9BvdSNaCGlYExH9UuYPlgPaWBs/9ty/931ITgMYP0NGFGf9ood6CC0jV9wEZjWQtqGFFQMVOXKd3UP8qECBeKj3HA6Qbh13Mava1T5nBU29fxRq9Rl3fdzGjkawFNawKqAicbBD9tQ+zKFpE1yK80hgEASpCbNF/0noAIN04HKRls9Hg+UVc+6I59BIsxRbGG6wLkmvU9TdkGxakd5bMRqoW1LAqID2SpmOKkRxUQ4BkLx0ApBuHu3nZTKyKFprdvN4CXcUJc3es5Uwju3MfqOZsrV7DyoAKL/1wsYpr7mCfdwpcV9wEuxgf8N2xLu3LBaQa84HiP6pgtaMHirIZG79dt+mOg9QW6O9WGIZao6rPl4/lRmiZbqRqAQ1rAGpJe0ttnN01o54B7cx/R+H46974dXLUM6CA40+Q+nYx2PEnSH0DmnhlQIgyIEQZEKIMCFEGhCge0LaU/gSp89IW4VBlQIgyIEQZEKIMCFEGhCgDQpQBIcqAEGVAiFoCREiDCMpLW4RDlQEhagdQiE8G5ADyOGVAEhDXEaJsiWRAJiD23xEmzohkQD4gQegIsyUGimRAEhDDccQRCQbvbztANPxoEzIRZUAM0LaIPGkmBKyZ6CZTBUh2874JpQNCttsiHKp2z8V8J0sDROSAYRoBscPyCLmACNhWr4JpyAhNIyByxPYyQpwoRKywLdsSvQoBqGS7LcKhatvFLBMS4yGrwhEIkPAr5mHD4bB0kNkiHKoWAREHD2hF1hfRlrqURET5DKczBkHDIA5IjYdch5OABBzGacg0pTEIBqSitetv6loS9yvxbzgUNjeFgGAfMy3piA9Im41AQ8S4atoAbRPwZMPF5LQlJh8FqGy7LcKhahqQfb6O8vEBDR1NG6DtNEA6BvGLRiQAiP7fM6CtxcXFd50rPly6a40v2b2Zfti99VwNQIiPGd39kMHx+Ax1l98zoLNritTa+NL/LP5TAYgCqwVou8yIjD5ed+c+oCHv04IXAjoCdOnue/iH3ds+tza+8J/jb6zt3vqVG+tbUAkgsxoAxrejPgFdvLNwsTUK6gt3KUDnCrPigK6//voqaydHSlxM+s44go9wtOaOO1oS0O4t9zAr2lqhMYi72K3nLn7+fD0XQ0KQOnQU0FCftPZjQUxn13ZvP6+DdIFma6UmoLIoTVR0wfmwehMAiPZli4srCtClu/+3KiDVPwfPOaK4aD5DOAp1BOjCDefHl/7L7uYpGt6VVQI0N8fgzNG/QQdLANRvL0bHQe9kHZkNaLyVAMjsaigYKdiG0gANQ/fUugKEqhyQHM2x0wUXEGxCaS4W7OkDu0tT9WiiLHuWwAnxd5kv509/AB7U0Qog4ssDZBAyWKUSGg6hKB3iQx8Mssz+sQdPPPM0y5tnecIbBzbl9/YBiQt/BQPJwncxTYiQw7UIRQNiAAr9/yb/svMs/pSBEX8myLL83jYgcWHQQrHNr3T4gCjLw4cPG+7WhAnBeztSj5gYqSdzUI/bkGny4nu7gEBvmqNw2OV2hxDHc9j0tvYB7S3Rpy4wc9pbKoLPhs4fZt/bBQRaEGMxR1xAbPFhy4BSAMmasYCki43Yw1TE8yYK1xqZj55gAapdQAAfGZI8QHOMz2FjVkyK5RhX72MA8adaHGRsduZnTjOLKqjxJ2Do750A8ixl24jZjgmpKJ2IhxwNEQrsruzmi1gz8++FpYhQxJbPnFahqQ9A3HgAQHNqHJAYnws8R4/yltGAmlIbgDgMcKlJKmAqAT5clycgAkRkXPDFQ/CytMHncgTEjCgd0JxHgnBTsZYzYob9+CcbLcKhagRQBftxbIhFFwlCWxELzke1AdEqLqEW4VA1Awi0D9zvjDuo9OiPHrVYmLZjFkwJINlllRMi8qoiRAJa6hnQ5Qtojh85ZkRBUwloigBxQgggzigaTzSgU7AmDFBk908SGMX2Yp+ENVmA4hXtZdHXgz4BSxbT64nL7ISenszafyYQECFXXnllDKH4uxofgiVK9/7uND9zXR5v0JNa889EAeI+yPhEEYoH9LewROmIncYu7/39mfHOs87Yf1oAVN2AuOVcKYV6Wtp9sb+x5JYWVrTznE3/T/OAqvIhBhqtMkAJdzX+GpausL96gl1NK5DYfyYIEIAH8zOAELy3H4SlytnDPyfdgioAih4HfQCWLOY3fDqKQdVdrEVAfwXL4sPcjHVf5p/JAQTbkAuIOGexnpfBe/uXsETphnh+cuvjoIrXykpsyLUgqGMjEYDeDyv6aJsCVJlNyIQ8PldffbXndQQH9D5YnQMqIxRznuobkONPV1N5ZoUDei+szgGFD135XilDwMVMGIQDcglFAHoPrM4BEeNqtBGNio8LCwvEXhgFyA5Cgo9DiEQAejesrgFZXkYWjI8LHBAxFkaakBeiqRnZgLZxQO+A1QMg5WfUaJS9cAtSdhQG5EchLyKTo05kigH0dlg9AuJGo3ior+UuhnZjAkk4BAUA/QWs3gBxY2FAHEBl9hPRz4O4ImLQn8PqB5CiAwEqH0dGuBhGCN7bP4PVByANxwLkWFQsoPQrr/DeLsDqHpBpPSaRWEBVXCwG0J/CqgFI5Ivt3sxyWqhi8sVcPAti4jgxXKwEUcTJWEVAfwKrBiCeL3bxP+6heS2x+WIenwUyR1yjKgPk8Uk3Ifi43garOiCRL3bhRsYqNl/M47PgIwsA4kNAAJB3PlbJgt4KqzogmS82ZlYUnS8G8ACYxTmX6WXYlVf0uN4CqzogmS9GczVW4vPFYgCBhMoAsTsdpYhwC3ozrOqAmGgcunjnimQWzBeTk+m9LizFhMoAYZ6GA3oTrPqAeNelAMH5Yix8AAEoTAiY6IkBKrlNFjGS/mNY1QGJfDGDTyhfjO32QqTxKETJBqTCEcInAOiNsHQFdv9ig78WM+qaNM8X4xmHaxqQny+WRqYuINCAIizoDbBU+YilIayLmxvN3puvAKiai4UAxbjYH8GSxesznyksaP+f2W3Cpu+LVTAhqBtrFxDVH1pyCimKwqfozZ/G76ymE4KiNMqmpK/He7E/gGUDorkahRU1f28+FRB0+yw4kBajIHL8eElHj55q/D4sGxDT+nLz9+bTLWh2dtYgxK71Hzp0CCJE4RyneKgCvXyEBb0eFgiohXvziYQ4H+OeR4HmEAyISDaCkNt/0bOQ4xEXzF4HywZEnWr/X860cG8+GpAYM5kGRDgcJgDQcUvO1Xq6hC8mCKDfg2UDouMgmhLV/L356DBNmOnMUmlAhxIAuXwMdKWAfhdW9NHWBRRvQbNCIk3TtB/qY66XeRZknG7YZeWAXgurM0CRJ6k+n0OebEYeoOOiN3OCEwboNbA6AxTpXoYYLQiQ7WgOBQtUCqBXw+oIUCQfm9AsD9XlhAAQIckgBO/tq2B1AyjdwUxDgpwMtSCQUBmgV8KaJECekylXK+GTAKjcxV4BqytAcYQgC4JsqJoFlQN6OayuAFU3IMCCGCGSHITKAb0MVieAYs0HNqBZuKcnmpDXoVcB9DuwOgBUz7+CHZkaDtHiMCCNT78sAdRvw+oAUOxpRsh+AnwKKodEVhQCaJsTQgD9FqxuAIUJEZxPAI92Nfah1LGIyScA6DdhdQGozISMOQtJ/mXa0SGUELuYhgD6DVidABqXASLiTyAAQSEaNKRwCOImhAF6KaxOAIUtiJBjfCpnCA9uQYxPOAIpL99GAP06rG4AlfA5dozU5BPEA2bTBQH9GqxuAAUIMT7UhEoAVbafAk/SgyZ/FVYngMCRNOF4GKGmAfGrZmlPJP8VWLoCu+TaWjoUMEvqmFKYzyx8ycwhBHVcYrvxgH4Zlipnt57bSwu3bYj9wAagshiEAfIMiKjYkwTol2DJYn7rub2UTBOQBQczISxMA3zUu6KSAFH9oiWnkN1ZbS2p1+Lj0CmLQbANqSV+/LFugKUA+gVYNqD20sLV3LI086GATp1yEBFyigT42D17EqCfh2UDajMtPAyolFBBo5AN6BQEiA6m3ezdFEAvgWUDajUtnLidV1SI5k/xESYkTky5TVnXgYh641FVQC+GZQNqNS1c3AX0AJX4GFHPOVJEmNh3tlgFZpBECqCfg2UDajMtnMMB+JQQIsajoCgggeqUyY0E+aQBehGs6KOtCwgyHQSQhYKGHUnIfISWfSWjBqAXwuoKUAmfQC9v4+HGYi9RiwN80gD9LKzOAKXymfVhAHg4oUYA/QysjgCVGRBoPRAgWGS7GUAvgFUDkMgXu3jn4g3n+ZJwvliZAYG+RRIABZUE6HmwagDi+WL0rSNbN2LvF0swIBFoYvmcKnmdeBKgn4JVHZDIF7v42XMUCZIvFgQkJiMSD1C8GgL0DFjVAYl8sd3bz0fki4VjkBgelUZn1IaaeI3YT8KqDkjki9GclgIQli9WMgpyPS0ZUNCIkizo6bCqA2Ji7xdjeauMWfj9Yhggg1AFQAFCSYB+AlZtQCIGKUCh94uVjaQnAtDTYFUHJPLFaD7m1o1jBSj4fjHwPBUElE6oiZPVH4dVHZB8v5g5DkLeL1ZOyJjfeooETiySDCgN0FNh1QCEqhagkydPRiNq5GT1KbAmBpDTjVFC0UbUyOWOJ8PqElBkDBJXoU9S1TvfSAL0JFgdAhJBOnBd0czRKA74pFCsk4GEkgA9EVaXgDiIq6gARGxavTxblYCiA3V9QD8Gq0tATFcJ+YBYzGGGdFKJxevKJpQE6EdhyeKIfPDagK4yBQDiRIgJKCFQ1wX0BFiyOCIfvDYgQkr4HONcbDwJblYb0I/AEqUx+eB1Adk2BBDiNFw+kYEafPR4CiCqH7ZklsTkg9cHZBICorSPJiVQ1wXkJ+ozidKYfPBmAXkmBNlOUk/m399IAvRDsMwqSD54A4AMQo1bEOBnSYB+EJYNqOUYRAN1sgHFD6c9P0sC9HhYojQmH7wJQIUJicGQByjIJwWQTSgJ0ONgyeKIfPBmAPFZGP5gugRQZUJJgB4LK/poGwIkKTFOrQAynyCQAugHYPUCSHOK4pMSpi0bSgL0/bD6BCRPz1BAVQklAXoMrH4B8VKasFHKJ5GQulufBOj7YE0CIGpJCKCkMKSGjEmAHg1rQgBhfNIASTdLAvS9sCYCEM4nHRC1oSRA3wNrWgExG0oC5F1d4JoAQHgAqgYoMdvnUbAmAVAEn8SOvooFPRJW/4BiDCjpNmtFC/puWL0DaosPNaEkQI+A1T+gKAdLx5NsQYHnL/YNKIpPKiCRkZkG6OGwegcU1YWlAqIrDm8X3tuHweodUASdytM6kwAFMhovA0CJdKoC+i5YEw+ozoS8JEAPhTX5gGpMyEsC9J2wegYUEaPTT1Ox7cJ7+xBYfQNC+SRfCTJJpABqTJMMqM6Nw8bU6DVpnE8CIW/+wmUPKGqUGD9P0X/rdd+AaCoUfb+YnBgd836xZAOKnt0BvFi+b0Bbi2ssT2PrhvOx7xerACh6IufEAdq97XMiHeqzWL5YLQuKdDGfUM+ALt39hbuUBUW/X8xSw0G6xaNOkM7VWGExiOdqRL9fzLKgqe7FCt+igGhe3YV36XSoQL5YFy7m+Vi/gPhroVZExqECFMoX6wKQS6jvID2GLCiYLwbwcQAFeF2uFiQAjS/wtDEFqCRfrNSA3Cnk0wAIUZoFEcCmogBZz9CZLkAuHzpf6KSTiYAOpNUDhaYQkJuUQfgcRivbB70iLVoVzTwvu9wBbfO0Qo7hpP3z4ymZRN/e4fcwuA1NGSBhL9v+88cIT+3VOKDHCVlrJq4BXf6ASu9eSW/T8ddwN2luFiAyhYDwUvkwGPNLaBbitAXpyFIr+BI7aaXSmluEQ9U1IO5XChBztXprbhEOVQ+ASOqjA8pLW4RD1bmLbZPwU6YyID6LunpbcHG76h5Q06UtwqHKgBBlQIgyIEQZEKIMCFEGhCgDQhQPSKn8HmtfpW0pA0KUASHKgBBVAPTtpQwIUQaEKANClAEhigd06S497+NmOplIfpOL9OxYt5TNE7Het2DWENNs6BPjQ6Vi6klg260qHtDZNfrQaTk5zym0Zse6pRcoO+t9C2YNVkrb795yT6B0zKfgBrbdrqIB0WeVF5LTO51Se3asXXr2nXSWmv2+hXNO6QX6kO+za4FSMQU3sO12FQ1o9/b/poYd2ElndqzbtljivG/BKRXrCJXyKbgTDuhmNotaTDGncUBGFCZzdqxXSg/Ket+CVUNFmRWoPSvlU3BD225VCRZkT+90St25jXaptiCgBv928c4V67vTVgfpSbWgi58vA+TOjrW1q2MQUEP0YmvWd6tUTMENrL1dJfVi1AqoqliQ974Fq9TgA9rXePItiEYZe6SzuGaUmrNjvVJ4HLRoHPKWscAvHXvjIGvbrSqPpBFlQIgyIEQZEKIMCFEGhCgDQpQBIcqAEGVAiDIgRBkQogwIUQaEKANClAEhyoAQZUCIMiBEGRCiDAjRtwCtWB8oJA8zRwAAAABJRU5ErkJggg==" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

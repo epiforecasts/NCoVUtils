@@ -1,0 +1,143 @@
+---
+title: "Introduction to NCoVUtils"
+author: ""
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to NCoVUtils}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This R package provides functions to get sub-national covid-19 data from selected countries. The current focus is on case and death data at a sub-national level. We also have functions to get all available country level data from the WHO and ECDC, and a database of current non-pharmaceutical interventions worldwide.
+
+In general, functions to get data will source, download, and clean the data following tidy principles, so that output is ready for immediate analysis.
+
+We depend on others for these data sources, including government and community maintained data, and cannot provide quality checks on the data itself.
+
+### A note on caching
+This package makes extensive use of `memoise` and writes a .cache to the directory in which its functions are run. This speeds up data retrieval and avoids hitting rate limits but does not follow CRAN best practice. Use with care. The cache can be reset with `reset_cache()` when updated data is required from the online source.
+
+## Worldwide data
+There are three sources of worldwide, country-level data on cases. One also includes deaths.
+
+1. Extract total global cases and deaths by country using:
+  + ```NCoVUtils::get_total_cases()```
+2. Extract international case counts compiled by the WHO using:
+  + ```NCoVUtils::get_who_cases()```
+3. Extract international case counts compiled by ECDC using:
+  + ```NCoVUtils::get_ecdc_cases()```
+
+A further function for worldwide data extracts non-pharmaceutical interventions by country:
+
+* ```NCoVUtils::get_interventions_data()```
+
+And we include a function to import and clean the latest anonymised international patient linelist data:
+
+* ```NCoVUtils::get_linelist()```
+
+## Sub-national data
+We currently have functions to extract sub-national level data for 11 countries. These are typically at the admin-1 level, the largest regions available. Where possible, we have joined the data to standard georeferencing to allow for straightforward mapping using `rnaturalearth`. 
+
+For most countries, subnational cases can be extracted by using the following:
+
+* ```NCoVUtils::get_[country]_regional_cases()```
+
+But exceptions are given  below. 
+
+Currently we include functions for sub-national data in the following countries:
+
+Europe 
+
+  +	Belgium 
+  
+  +	France
+  
+  + Germany
+  
+  +	Italy
+  
+  +	Spain
+  
+  + United Kingdom - use `NCoVUtils::get_uk_nhs_region_cases()`
+    
+Americas
+  
+  +	Canada
+  
+  +	United States - use `NCoVUtils::get_us_regional_cases()`
+    
+Eastern Mediterranean
+  
+  + Afghanistan 
+    
+Western Pacific
+  
+  + Korea
+  
+  + Japan
+    
+South-East Asia
+
+  + None currently available
+    
+Africa
+  
+  + None currently available
+
+
+We are working to include more countries.
+ 
+## Example: Germany
+German data was collated by Jan-Philip Gehrcke (gh: jgehrcke) and is available [on github](https://github.com/jgehrcke/covid-19-germany-gae).
+
+```{r}
+germany <- NCoVUtils::get_germany_regional_cases()
+head(germany, 5)
+```
+
+Use usual tidyverse verbs to adapt the returned data, for example getting only the latest date:
+
+```{r}
+suppressMessages(library(dplyr))
+germany_latest <- filter(germany, date == max(date))
+head(germany_latest, 5)
+```
+
+Or aggregate cases to a national level and plot over time:
+
+```{r}
+suppressMessages(library(ggplot2))
+germany %>% 
+  group_by(date) %>%
+  summarise(cases = sum(cases)) %>%
+  ggplot(aes(x = date, y = cases)) + 
+  geom_line() + 
+  labs(x = "Date", y = "Cases", title = "Germany: reported covid-19 cases")
+```
+
+German regions can be mapped by a simple join with `rnaturalearth`:
+
+```{r}
+regions <- rnaturalearth::ne_states("Germany", returnclass = "sf")
+
+germany_latest <- NCoVUtils::get_germany_regional_cases() %>%
+  filter(date == max(date))
+
+regions_with_data <- regions %>%
+  left_join(germany_latest,
+                  by = c("iso_3166_2" = "region_code"))
+
+regions_with_data %>%
+  ggplot() +
+  geom_sf(aes(fill = cases)) + 
+  labs(title = "German regions: latest cases")
+```
+
