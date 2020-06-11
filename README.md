@@ -8,6 +8,8 @@
 [![DOI](https://zenodo.org/badge/238177228.svg)](https://zenodo.org/badge/latestdoi/238177228)
 
 
+**This package is now depreciated with development being moved to [`covidregionaldata`](https://github.com/epiforecasts/covidregionaldata)**
+
 *Note: This package makes extensive use of `memoise` and writes a `.cache` to the directory in which its functions are run. This speeds up data retrieval and avoids hitting rate limits but does not follow CRAN best practice.* **Use with care.** *The cache can be reset with `reset_cache()` when updated data is required from the online source.*
 
 ## Installation
