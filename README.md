@@ -14,15 +14,6 @@
 
 ## Installation
 
-Install the stable version of the package using
-[`{drat}`](https://epiforecasts.io/drat/):
-
-``` r
-install.packages("drat")
-drat:::add("epiforecasts")
-install.packages("NCoVUtils")
-```
-
 Install the development version of the package with:
 
 ``` r
