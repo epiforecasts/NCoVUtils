@@ -20,7 +20,7 @@
 #' regions <- rnaturalearth::ne_states(geounit = "Russia", returnclass = "sf")
 #' data <- get_russia_regional_cases() %>%
 #'   dplyr::filter(date == max(date))
-#' regions_with_data <- dplyr::left_join(regions, data, by = c("iso_3166_2" = "iso_code"))
+#' regions_with_data <- dplyr::left_join(regions, data, by = c("iso_3166_2" = "iso_3166_2"))
 #' regions_with_data %>%
 #'   ggplot2::ggplot(ggplot2::aes(fill = cases)) +
 #'   ggplot2::geom_sf() +
@@ -60,7 +60,7 @@ get_russia_regional_cases <- function() {
     iso_code <- iso_table[[1]][-1,]$Code
 
     iso_codes <- tibble::tibble(
-      iso_code = c(iso_code, "UA-40", "UA-43"),
+      iso_3166_2 = c(iso_code, "UA-40", "UA-43"),
       region = c("Adygea Republic", "Altai Republic", "Bashkortostan Republic", "Buryatia Republic",
                  "Chechen Republic", "Chuvashia Republic", "Dagestan Republic", "Ingushetia Republic",
                  "Kabardino-Balkarian Republic", "Kalmykia Republic", "Karachay-Cherkess Republic", "Karelia Republic",
