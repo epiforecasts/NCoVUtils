@@ -16,16 +16,15 @@
 #'\dontrun{
 #'
 #'
-
-# # Mapping
-# regions <- rnaturalearth::ne_states(geounit = "Russia", returnclass = "sf")
-# data <- get_russia_regional_cases() %>%
-#   dplyr::filter(date == max(date))
-# regions_with_data <- dplyr::left_join(regions, data, by = c("iso_3166_2" = "iso_code"))
-# regions_with_data %>%
-#   ggplot2::ggplot(ggplot2::aes(fill = cases)) +
-#   ggplot2::geom_sf() +
-#   ggplot2::coord_sf(xlim = c(20, max(sf::st_coordinates(regions_with_data))))
+#' # Mapping
+#' regions <- rnaturalearth::ne_states(geounit = "Russia", returnclass = "sf")
+#' data <- get_russia_regional_cases() %>%
+#'   dplyr::filter(date == max(date))
+#' regions_with_data <- dplyr::left_join(regions, data, by = c("iso_3166_2" = "iso_code"))
+#' regions_with_data %>%
+#'   ggplot2::ggplot(ggplot2::aes(fill = cases)) +
+#'   ggplot2::geom_sf() +
+#'   ggplot2::coord_sf(xlim = c(20, max(sf::st_coordinates(regions_with_data))))
 #'   }
 
 get_russia_regional_cases <- function() {
