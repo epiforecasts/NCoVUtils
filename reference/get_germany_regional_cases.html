@@ -125,7 +125,7 @@ This data is sourced from the Robert Koch Institute:
 https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b329dd6_0</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_germany_regional_cases</span>(<span class='kw'>geography</span> <span class='kw'>=</span> <span class='st'>"states"</span>)</pre>
+    <pre class="usage"><span class='fu'>get_germany_regional_cases</span>(geography = <span class='st'>"states"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,24 +143,25 @@ https://npgeo-corona-npgeo-de.hub.arcgis.com/datasets/dd4580c810204019a7b8eb3e0b
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>country</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rnaturalearth</span><span class='kw ns'>::</span><span class='fu'>ne_countries</span>(<span class='kw'>scale</span><span class='kw'>=</span><span class='st'>"large"</span>,
-                                        <span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"Germany"</span>,
-                                        <span class='kw'>returnclass</span> <span class='kw'>=</span> <span class='st'>'sf'</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>country</span> <span class='op'>&lt;-</span> <span class='kw'>rnaturalearth</span>::<span class='fu'>ne_countries</span>(scale=<span class='st'>"large"</span>,
+                                        country = <span class='st'>"Germany"</span>,
+                                        returnclass = <span class='st'>'sf'</span>)
 
-<span class='no'>regions</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rnaturalearth</span><span class='kw ns'>::</span><span class='fu'>ne_states</span>(<span class='st'>"Germany"</span>, <span class='kw'>returnclass</span> <span class='kw'>=</span> <span class='st'>"sf"</span>)
+<span class='kw'>regions</span> <span class='op'>&lt;-</span> <span class='kw'>rnaturalearth</span>::<span class='fu'>ne_states</span>(<span class='st'>"Germany"</span>, returnclass = <span class='st'>"sf"</span>)
 
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>get_germany_regional_cases</span>() <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>date</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>date</span>))
+<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'>get_germany_regional_cases</span>() <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='kw'>date</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='kw'>date</span>))
 
-<span class='no'>regions_with_data</span> <span class='kw'>&lt;-</span> <span class='no'>regions</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='no'>data</span>,
-                  <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name"</span> <span class='kw'>=</span> <span class='st'>"state"</span>))
+<span class='kw'>regions_with_data</span> <span class='op'>&lt;-</span> <span class='kw'>regions</span> <span class='op'>%&gt;%</span>
+  <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='kw'>data</span>,
+                  by = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name"</span> = <span class='st'>"state"</span>))
 
-<span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>ggplot</span>(<span class='no'>regions_with_data</span>) +
-  <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>geom_sf</span>(<span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cases</span>))
+<span class='kw'>ggplot2</span>::<span class='fu'>ggplot</span>(<span class='kw'>regions_with_data</span>) <span class='op'>+</span>
+  <span class='kw'>ggplot2</span>::<span class='fu'>geom_sf</span>(<span class='kw'>ggplot2</span>::<span class='fu'>aes</span>(fill = <span class='kw'>cases</span>))
 
-}</div></pre>
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

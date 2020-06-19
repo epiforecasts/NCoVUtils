@@ -129,22 +129,22 @@ Source." />
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Mapping</span>
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'>get_korea_regional_cases</span>()
+<span class='kw'>data</span> <span class='op'>&lt;-</span> <span class='fu'>get_korea_regional_cases</span>()
 
-<span class='no'>regions</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rnaturalearth</span><span class='kw ns'>::</span><span class='fu'>ne_states</span>(<span class='st'>"South Korea"</span>, <span class='kw'>returnclass</span> <span class='kw'>=</span> <span class='st'>"sf"</span>)
+<span class='kw'>regions</span> <span class='op'>&lt;-</span> <span class='kw'>rnaturalearth</span>::<span class='fu'>ne_states</span>(<span class='st'>"South Korea"</span>, returnclass = <span class='st'>"sf"</span>)
 
-<span class='no'>regions_with_data</span> <span class='kw'>&lt;-</span> <span class='no'>regions</span> <span class='kw'>%&gt;%</span>
-<span class='fu'>mutate</span>(<span class='kw'>name_de</span> <span class='kw'>=</span> <span class='fu'>str_replace_all</span>(<span class='no'>name_de</span>, <span class='st'>"Jeju-do"</span>, <span class='st'>"Jeju"</span>)) <span class='kw'>%&gt;%</span>
-<span class='fu'>left_join</span>(<span class='no'>data</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name_de"</span> <span class='kw'>=</span> <span class='st'>"region"</span>))
+<span class='kw'>regions_with_data</span> <span class='op'>&lt;-</span> <span class='kw'>regions</span> <span class='op'>%&gt;%</span>
+<span class='fu'>mutate</span>(name_de = <span class='fu'>str_replace_all</span>(<span class='kw'>name_de</span>, <span class='st'>"Jeju-do"</span>, <span class='st'>"Jeju"</span>)) <span class='op'>%&gt;%</span>
+<span class='fu'>left_join</span>(<span class='kw'>data</span>, by = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name_de"</span> = <span class='st'>"region"</span>))
 
 
-<span class='fu'>ggplot</span>(<span class='no'>regions_with_data</span>) +
-<span class='fu'>geom_sf</span>(<span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cases</span>))
+<span class='fu'>ggplot</span>(<span class='kw'>regions_with_data</span>) <span class='op'>+</span>
+<span class='fu'>geom_sf</span>(<span class='fu'>aes</span>(fill = <span class='kw'>cases</span>))
 }
 
-<span class='no'>get_korea_regional_cases</span></div><div class='output co'>#&gt; function () 
+<span class='kw'>get_korea_regional_cases</span></div><div class='output co'>#&gt; function () 
 #&gt; {
 #&gt;     webpage &lt;- xml2::read_html("http://ncov.mohw.go.kr/en/bdBoardList.do?brdId=16&amp;brdGubun=162&amp;dataGubun=&amp;ncvContSeq=&amp;contSeq=&amp;board_id=")
 #&gt;     ch &lt;- memoise::cache_filesystem(".cache")
@@ -158,7 +158,7 @@ Source." />
 #&gt;         "Lazaretto") %&gt;% dplyr::mutate(cases = as.numeric(as.character(cases)))
 #&gt;     return(cases)
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb338bb8088&gt;
+#&gt; &lt;bytecode: 0x7ffc17ce3840&gt;
 #&gt; &lt;environment: namespace:NCoVUtils&gt;</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

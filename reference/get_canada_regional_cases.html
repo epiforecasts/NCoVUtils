@@ -123,7 +123,7 @@ Data is available at https://www.canada.ca/en/public-health/services/diseases/20
 Data is available at https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection.html</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_canada_regional_cases</span>(<span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"timeseries"</span>)</pre>
+    <pre class="usage"><span class='fu'>get_canada_regional_cases</span>(out = <span class='st'>"timeseries"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,15 +140,15 @@ Data is available at https://www.canada.ca/en/public-health/services/diseases/20
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
- <span class='no'>total_cases</span> <span class='kw'>=</span> <span class='fu'>get_canada_regional_cases</span>(<span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"total"</span>)
-
- <span class='kw pkg'>rnaturalearth</span><span class='kw ns'>::</span><span class='fu'>ne_states</span>(<span class='kw'>country</span> <span class='kw'>=</span> <span class='st'>"canada"</span>, <span class='kw'>returnclass</span><span class='kw'>=</span><span class='st'>"sf"</span>) <span class='kw'>%&gt;%</span>
-   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='no'>total_cases</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'name_en'</span> <span class='kw'>=</span> <span class='st'>'province'</span>)) <span class='kw'>%&gt;%</span>
-   <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>ggplot</span>() +
-   <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>theme_void</span>() +
-   <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>geom_sf</span>(<span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cases_confirmed</span>)) +
-   <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>labs</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='st'>'Confirmed Cases'</span>)
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+ <span class='kw'>total_cases</span> <span class='op'>=</span> <span class='fu'>get_canada_regional_cases</span>(out = <span class='st'>"total"</span>)
+ 
+ <span class='kw'>rnaturalearth</span>::<span class='fu'>ne_states</span>(country = <span class='st'>"canada"</span>, returnclass=<span class='st'>"sf"</span>) <span class='op'>%&gt;%</span> 
+   <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span>(<span class='kw'>total_cases</span>, by = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'name_en'</span> = <span class='st'>'province'</span>)) <span class='op'>%&gt;%</span> 
+   <span class='kw'>ggplot2</span>::<span class='fu'>ggplot</span>() <span class='op'>+</span>
+   <span class='kw'>ggplot2</span>::<span class='fu'>theme_void</span>() <span class='op'>+</span>
+   <span class='kw'>ggplot2</span>::<span class='fu'>geom_sf</span>(<span class='fu'>aes</span>(fill = <span class='kw'>cases_confirmed</span>)) <span class='op'>+</span>
+   <span class='kw'>ggplot2</span>::<span class='fu'>labs</span>(fill = <span class='st'>'Confirmed Cases'</span>)  
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

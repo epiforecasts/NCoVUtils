@@ -129,7 +129,7 @@
     <p>A dataframe of case counts in English NHS regions</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>get_uk_nhs_region_cases</span></div><div class='output co'>#&gt; function () 
+    <pre class="examples"><div class='input'><span class='kw'>get_uk_nhs_region_cases</span></div><div class='output co'>#&gt; function () 
 #&gt; {
 #&gt;     warning("The soource data for this function is no longer updated. Try get_uk_regional_cases for similar data")
 #&gt;     path &lt;- "https://raw.githubusercontent.com/emmadoughty/Daily_COVID-19/8a0ea87f40edf746519afdb4d1e7ed95c816df1e/Data/COVID19_cum.csv"
@@ -163,15 +163,15 @@
 #&gt;         dplyr::mutate(cases = ifelse(cases &lt; 0, 0, cases))
 #&gt;     return(cases_nhs)
 #&gt; }
-#&gt; &lt;bytecode: 0x7fb33fd9a968&gt;
+#&gt; &lt;bytecode: 0x7ffc14b7a478&gt;
 #&gt; &lt;environment: namespace:NCoVUtils&gt;</div><div class='input'>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>uk_shp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>"uk_shp.rds"</span>)
-<span class='no'>cases</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>NCoVUtils</span><span class='kw ns'>::</span><span class='fu'><a href='get_uk_regional_cases.html'>get_uk_regional_cases</a></span>()
-<span class='no'>cases</span> <span class='kw'>&lt;-</span> <span class='no'>cases</span>[<span class='fl'>1</span>:<span class='fl'>23</span>,]
-<span class='no'>uk_shp</span> <span class='kw'>%&gt;%</span>
-<span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span>(<span class='no'>cases</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"region"</span>) <span class='kw'>%&gt;%</span>
- <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>ggplot</span>(<span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>aes</span>(<span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cases</span>)) + <span class='kw pkg'>ggplot2</span><span class='kw ns'>::</span><span class='fu'>geom_sf</span>()
+<span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>uk_shp</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>"uk_shp.rds"</span>)
+<span class='kw'>cases</span> <span class='op'>&lt;-</span> <span class='kw'>NCoVUtils</span>::<span class='fu'><a href='https://rdrr.io/pkg/NCoVUtils/man/get_uk_regional_cases.html'>get_uk_regional_cases</a></span>()
+<span class='kw'>cases</span> <span class='op'>&lt;-</span> <span class='kw'>cases</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>23</span>,]
+<span class='kw'>uk_shp</span> <span class='op'>%&gt;%</span>
+<span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>full_join</a></span>(<span class='kw'>cases</span>, by = <span class='st'>"region"</span>) <span class='op'>%&gt;%</span>
+ <span class='kw'>ggplot2</span>::<span class='fu'>ggplot</span>(<span class='kw'>ggplot2</span>::<span class='fu'>aes</span>(fill = <span class='kw'>cases</span>)) <span class='op'>+</span> <span class='kw'>ggplot2</span>::<span class='fu'>geom_sf</span>()
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
