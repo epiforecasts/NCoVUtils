@@ -140,7 +140,20 @@
     <p>Joel Hellewell</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>format_ecdc_data</span>(<span class='fu'>get_ecdc_cases</span>(countries = <span class='st'>"France"</span>))</div><div class='output co'>#&gt; <span class='error'>Error: </span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>format_ecdc_data</span>(<span class='fu'>get_ecdc_cases</span>(countries = <span class='st'>"France"</span>))</div><div class='output co'>#&gt; <span class='message'>csv unavailable, trying alternative</span></div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 174 x 3</span><span>
+#&gt;    date       region cases
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2019-12-31 France     0
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2020-01-01 France     0
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2020-01-02 France     0
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2020-01-03 France     0
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2020-01-04 France     0
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2020-01-05 France     0
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2020-01-06 France     0
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2020-01-07 France     0
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2020-01-08 France     0
+#&gt; </span><span style='color: #555555;'>10</span><span> 2020-01-09 France     0
+#&gt; </span><span style='color: #555555;'># … with 164 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
