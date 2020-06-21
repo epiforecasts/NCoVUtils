@@ -11,6 +11,8 @@
 #' @inheritParams get_international_linelist
 #' @importFrom memoise cache_filesystem memoise
 #' @importFrom readr read_csv
+#' @importFrom httr GET write_disk
+#' @importFrom readxl read_excel
 #' @importFrom dplyr mutate rename select arrange filter
 #' @examples
 #'
