@@ -13,7 +13,7 @@ test_that("get_ecdc_cases data source is unchanged", {
   
   base <- readr::read_csv("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv")
   
-  expected_colnames = c("dateRep", "day", "month", "year", "cases", "deaths", "countriesAndTerritories", "geoId", "countryterritoryCode", "popData2018")
+  expected_colnames = c("dateRep", "day", "month", "year", "cases", "deaths", "countriesAndTerritories", "geoId", "countryterritoryCode", "popData2019")
   
   sapply(expected_colnames, expect_colname, colnames = colnames(base))
   
